@@ -1,3 +1,4 @@
+import java.io.ObjectInputStream.GetField;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,8 +9,6 @@ import java.util.Comparator;
 
 import java.util.Stack;
 
-import javax.swing.tree.ExpandVetoException;
-
 import core.Position;
 import core.ai.AiMapInfo;
 import core.map.SNDMap;
@@ -18,14 +17,14 @@ import core.map.SNDMapGenerator;
 
 public class AStarAlgorithm implements PathFinder {
 	// variables
-	private final AiMapInfo map;
-	private Map<SNDMapExpand, Integer> costs;
-	private final Map<SNDMapExpand, Integer> fValues;
+	private final AirMapInfoExpand map;
+	private Map<SNDMap, Integer> costs;
+	private final Map<SNDMap, Integer> fValues;
 
 	// constructor
-	public AStarAlgorithm(final AiMapInfo map) {
+	public AStarAlgorithm(final AirMapInfoExpand map) {
 		this.map = map;
-		this.fValues = new HashMap<SNDMapExpand, Integer>();
+		this.fValues = new HashMap<SNDMap, Integer>();
 	}
 
 	// comparator
@@ -39,10 +38,10 @@ public class AStarAlgorithm implements PathFinder {
 
 	private void initCosts(final SNDMap from) {
 		this.fValues.clear();
-		costs = new HashMap<SNDMapExpand, Integer>();
+		costs = new HashMap<SNDMap, Integer>();
 
-		for (int i = 0; i < map.getSizeX(); i++) {
-			for (int j = 0; i < map.getSizeY(); j++) {
+		for (int i = 0; i < map.getWidth(); i++) {
+			for (int j = 0; j < map.getHeight(); j++) {
 				// costs.put(map.get, Integer.MAX_VALUE);
 				// fValues.put(map.getField(i, i), Integer.MAX_VALUE);
 			}
@@ -51,7 +50,7 @@ public class AStarAlgorithm implements PathFinder {
 		fValues.put(from, 0);
 	}
 
-	private int h(final SNDMapExpand to) {
+	private int h(final SNDMap to) {
 		final SNDMap goal = to;
 		final int diff = (int) Math.round(Math.sqrt(Math.pow(goal.getSizeX() - to.getSizeX(), 2) + Math.pow(goal.getSizeY() - to.getSizeY(), 2)));
 		return diff;
@@ -74,33 +73,35 @@ public class AStarAlgorithm implements PathFinder {
 
 	public Iterable<SNDMap> backtrack(final Map<SNDMap, SNDMap> preds) {
 		final Stack<SNDMap> stacky = new Stack<SNDMap>();
-		SNDMap curr = 
+		/*SNDMap curr =map.getFlagPosition());
 		// TODO change to getGoal stacky.add(cur);
 		if (preds.get(curr) != null) {
 			curr = preds.get(curr);
 			stacky.add(curr);
 		}
+		*/
 		return stacky;
 	}
 
 	@Override
-	public Iterable<SNDMapExpand> findShortestPath(SNDMapExpand from) {
-		final PriorityQueue<SNDMapExpand> openList = new PriorityQueue<SNDMapExpand>();
-		final Set<SNDMapExpand> closedList = new HashSet<SNDMapExpand>();
-		final Map<SNDMapExpand, SNDMapExpand> preds = new HashMap<SNDMapExpand, SNDMapExpand>();
+	public Iterable<SNDMap> findShortestPath(SNDMap from) {
+		final PriorityQueue<SNDMap> openList = new PriorityQueue<SNDMap>();
+		final Set<SNDMap> closedList = new HashSet<SNDMap>();
+		final Map<SNDMap, SNDMap> preds = new HashMap<SNDMap, SNDMap>();
 
 		preds.put(from, null);
 		initCosts(from);
 		openList.add(from);
-
+/*
 		do {
-			final SNDMapExpand curr = openList.poll();
-			if (curr == map.get) {
+			final SNDMap curr = openList.poll();
+			if (curr == map.) {
 				return backtrack(preds);
 			}
 			closedList.add(curr);
 			expandNode(curr, openList, closedList, preds);
 		} while (!openList.isEmpty());
+		*/
 		return null;
 	}
 
