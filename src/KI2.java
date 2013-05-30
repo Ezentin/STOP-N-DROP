@@ -23,20 +23,15 @@ public class KI2 extends PlayerController {
 		return "Ulrich Rott";
 	}
 
-	private boolean iswalkable(FieldType toCheckField) {
-		if (toCheckField == FieldType.DROPPED_FIELD || toCheckField == FieldType.RESTRICTED_FIELD)
-			return false;
-		else
-			return true;
-	}
+	
 
 	private boolean isImasse(Action direction, AiMapInfo map, AiPlayerInfo ownPlayer) {
 
 		switch (direction) {
 		case MOVE_LEFT:
 			if ((ownPlayer.getPosition().x > 1) && ((ownPlayer.getPosition().y > 0) || (ownPlayer.getPosition().y < 24))) {
-				if (iswalkable(map.getField(ownPlayer.getPosition().left().up())) || iswalkable(map.getField(ownPlayer.getPosition().left().down()))
-						|| iswalkable(map.getField(ownPlayer.getPosition().left().left())))
+				if (map.getField(ownPlayer.getPosition().left().up()).isWalkable() || map.getField(ownPlayer.getPosition().left().down()).isWalkable()
+						|| (map.getField(ownPlayer.getPosition().left().left()).isWalkable()))
 					return false;
 				else
 					return true;
@@ -44,8 +39,8 @@ public class KI2 extends PlayerController {
 				return false;
 		case MOVE_RIGHT:
 			if ((ownPlayer.getPosition().x < 27) && ((ownPlayer.getPosition().y > 0) || (ownPlayer.getPosition().y < 24))) {
-				if (iswalkable(map.getField(ownPlayer.getPosition().right().up())) || iswalkable(map.getField(ownPlayer.getPosition().right().down()))
-						|| iswalkable(map.getField(ownPlayer.getPosition().right().right())))
+				if (map.getField(ownPlayer.getPosition().right().up()).isWalkable() || map.getField(ownPlayer.getPosition().right().down()).isWalkable()
+						|| map.getField(ownPlayer.getPosition().right().right()).isWalkable())
 					return false;
 				else
 					return true;
@@ -53,8 +48,8 @@ public class KI2 extends PlayerController {
 				return false;
 		case MOVE_UP:
 			if ((ownPlayer.getPosition().y > 1) && ((ownPlayer.getPosition().x > 0) || (ownPlayer.getPosition().x < 28))) {
-				if (iswalkable(map.getField(ownPlayer.getPosition().up().up())) || iswalkable(map.getField(ownPlayer.getPosition().up().left()))
-						|| iswalkable(map.getField(ownPlayer.getPosition().up().right())))
+				if (map.getField(ownPlayer.getPosition().up().up()).isWalkable() || map.getField(ownPlayer.getPosition().up().left()).isWalkable()
+						|| map.getField(ownPlayer.getPosition().up().right()).isWalkable())
 					return false;
 				else
 					return true;
@@ -62,8 +57,8 @@ public class KI2 extends PlayerController {
 				return false;
 		case MOVE_DOWN:
 			if ((ownPlayer.getPosition().y < 23) && ((ownPlayer.getPosition().x > 0) || (ownPlayer.getPosition().x < 28))) {
-				if (iswalkable(map.getField(ownPlayer.getPosition().down().down())) || iswalkable(map.getField(ownPlayer.getPosition().down().left()))
-						|| iswalkable(map.getField(ownPlayer.getPosition().down().right())))
+				if (map.getField(ownPlayer.getPosition().down().down()).isWalkable() || map.getField(ownPlayer.getPosition().down().left()).isWalkable()
+						|| map.getField(ownPlayer.getPosition().down().right()).isWalkable())
 					return false;
 				else
 					return true;
@@ -109,14 +104,14 @@ public class KI2 extends PlayerController {
 			return Action.DO_NOTHING;
 		else
 
-		if (iswalkable(rightField) && !isImasse(Action.MOVE_RIGHT, map, ownPlayer))
+		if (rightField.isWalkable() && !isImasse(Action.MOVE_RIGHT, map, ownPlayer))
 			return Action.MOVE_RIGHT;
-		if (iswalkable(downField) && !isImasse(Action.MOVE_DOWN, map, ownPlayer))
+		if (downField.isWalkable() && !isImasse(Action.MOVE_DOWN, map, ownPlayer))
 			return Action.MOVE_DOWN;
 
-		if (iswalkable(leftField) && !isImasse(Action.MOVE_LEFT, map, ownPlayer))
+		if (leftField.isWalkable() && !isImasse(Action.MOVE_LEFT, map, ownPlayer))
 			return Action.MOVE_LEFT;
-		if (iswalkable(upField) && !isImasse(Action.MOVE_UP, map, ownPlayer))
+		if (upField.isWalkable() && !isImasse(Action.MOVE_UP, map, ownPlayer))
 			return Action.MOVE_UP;
 
 		if (ownPlayer.getItem() != Item.BOMB)
@@ -130,14 +125,14 @@ public class KI2 extends PlayerController {
 		if (!map.isParkourMap())
 			return thinkAgainsCareful(map, enemies, ownPlayer);
 		else{
-			PathFinder p = new AStarAlgorithm(map);
+			/*PathFinder p = new AStarAlgorithm(map);
 			final Iterable<SNDMap> path = p.findShortestPath(ownField));
 			if (path == null){
 				return null;}else{
 					for (final SNDMap f : path){
 						//TODO write the Stackabarbeitung
 				}
-			
+			*/
 			return Action.MOVE_DOWN;
 		}
 			
