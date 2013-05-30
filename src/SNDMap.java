@@ -6,9 +6,9 @@ import core.map.FieldType;
 import core.map.SNDMap;
 
 
-public class SNDMapExpand extends SNDMap{
+public class SNDMap extends SNDMap{
 
-	protected SNDMapExpand(int sizeX, int sizeY, int standardFieldLifeTime, boolean useItems, int standardItemTime, int minTimeBetweenItemPlacement,
+	protected SNDMap(int sizeX, int sizeY, int standardFieldLifeTime, boolean useItems, int standardItemTime, int minTimeBetweenItemPlacement,
 			int maxTimeBetweenItemPlacement, ArrayList<FieldType> placeableItems, ArrayList<Integer> itemPossibilities, Position[] startPositions,
 			FieldType[][] fields, int[][] fieldRemainingLifetime, long rndSeed) {
 		super(sizeX, sizeY, standardFieldLifeTime, useItems, standardItemTime, minTimeBetweenItemPlacement, maxTimeBetweenItemPlacement, placeableItems,

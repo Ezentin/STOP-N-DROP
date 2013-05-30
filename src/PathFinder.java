@@ -1,6 +1,7 @@
-//import core.map.SNDMap;
-
+import core.map.SNDMap;
 
 public interface PathFinder {
-	public Iterable<SNDMapExpand> findShortestPath(final SNDMapExpand from);
+	public Iterable<SNDMap> findShortestPath(final SNDMap from);
 }
+
+
