@@ -1,8 +1,6 @@
-import core.Position;
 import core.ai.AiMapInfo;
 import core.ai.AiPlayerInfo;
 import core.map.FieldType;
-import core.map.SNDMap;
 import core.player.Player.Action;
 import core.player.Player.Item;
 import core.player.PlayerController;
