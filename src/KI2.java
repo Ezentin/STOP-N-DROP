@@ -22,7 +22,7 @@ public class KI2 extends PlayerController {
 	@Override
 	public Action think(AiMapInfo map, AiPlayerInfo[] enemies, AiPlayerInfo ownPlayer) {
 		if (!map.isParkourMap()){
-			NormalGame now = new NormalGame(map,enemies, ownPlayer);
+			NormalGame now = new NormalGame();
 			return now.thinkAgainsCareful(map, enemies, ownPlayer);
 			}
 		else {
