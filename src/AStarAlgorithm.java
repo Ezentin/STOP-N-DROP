@@ -1,4 +1,3 @@
-import java.io.ObjectInputStream.GetField;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +12,6 @@ import core.Position;
 import core.ai.AiMapInfo;
 import core.map.SNDMap;
 import core.map.FieldType;
-import core.map.SNDMapGenerator;
 
 public class AStarAlgorithm implements PathFinder {
 	// variables
