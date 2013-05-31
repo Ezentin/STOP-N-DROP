@@ -10,14 +10,9 @@ import core.player.Player.Item;
  */
 
 public class NormalGame {
-	private AiMapInfo map;
-	private AiPlayerInfo[] enemies;
-	private AiPlayerInfo ownPlayer;
 
-	public NormalGame(AiMapInfo map, AiPlayerInfo[] enemies, AiPlayerInfo ownPlayer) {
-		this.map = map;
-		this.enemies = enemies;
-		this.ownPlayer = ownPlayer;
+	public NormalGame() {
+
 	}
 
 	private boolean iswalkable(FieldType toCheckField) {

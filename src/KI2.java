@@ -1,16 +1,11 @@
-import core.Position;
 import core.ai.AiMapInfo;
 import core.ai.AiPlayerInfo;
-import core.map.FieldType;
-import core.map.SNDMap;
 import core.player.Player.Action;
-import core.player.Player.Item;
 import core.player.PlayerController;
 
 public class KI2 extends PlayerController {
 
 	public KI2() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -30,7 +25,8 @@ public class KI2 extends PlayerController {
 			NormalGame now = new NormalGame(map,enemies, ownPlayer);
 			return now.thinkAgainsCareful(map, enemies, ownPlayer);
 			}
-		else {/*
+		else {
+			/*
 			 * PathFinder p = new AStarAlgorithm(map); final Iterable<SNDMap>
 			 * path = p.findShortestPath(ownField)); if (path == null){ return
 			 * null;}else{ for (final SNDMap f : path){ //TODO write the
