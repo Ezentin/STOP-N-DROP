@@ -16,6 +16,11 @@ public class AirMapInfoExpand extends AiMapInfo {
 				if (this.getField(new Position(x, y)) == FieldType.ACTION_FIELD_FLAG)
 					return new Position(x, y);
 
+		// no Flag found
 		return null;
+	}
+
+	public FieldType getCosts(Position pos) {
+		return this.getField(pos);
 	}
 }
