@@ -1,0 +1,217 @@
+public class ParkourBot {
+  public static Stack <Position> Path = new Stack<Position>();
+	public static Action think_(AiMapInfo map, AiPlayerInfo[] enemies,AiPlayerInfo ownPlayer) {
+		Position Me = ownPlayer.getPosition();
+		FieldType Feld [][] = getFieldTypeArray(map);
+		if (Path.isEmpty()) Path = getWayToFlag(Feld, Me);
+		else return run (Path, Me);
+		System.out.println(Path);
+		System.out.println(Me);
+		return null;
+	}
+	public static Action run(Stack <Position> Path, Position Me) {
+		while (!Path.isEmpty()) {
+			Position next = Path.pop();
+			if (next.x > Me.x && next.y==Me.y) return Action.MOVE_RIGHT;
+			if (next.x < Me.x && next.y==Me.y) return Action.MOVE_LEFT;
+			if (next.y > Me.y && next.x==Me.x) return Action.MOVE_DOWN;
+			if (next.y < Me.y && next.x==Me.x) return Action.MOVE_UP;
+			}
+		return null;
+	}
+	public static FieldType [][] getFieldTypeArray(AiMapInfo map) {
+		FieldType [][] Feld = new FieldType[map.getWidth()][map.getHeight ()];
+		for (int x=0; x < map.getWidth(); x++) {
+			for (int y=0; y < map.getHeight(); y++) {
+				Position pos = new Position(x,y);
+				Feld [x][y] = map.getField(pos);
+				}
+			}
+		return Feld;
+	}
+	public static Position getFlagField(FieldType Feld [][]) {
+		for (int x=0; x < Feld.length; x++) {
+			for (int y=0; y < Feld[0].length; y++) {
+				Position Flag = new Position(x,y);
+				if (Feld [x][y].equals(FieldType.ACTION_FIELD_FLAG))
+					return Flag;
+				}
+			}
+		return new Position(null);
+	}
+	public static Stack<Position> getWayToFlag(FieldType Feld[][], Position Me) {
+		Position Flag = getFlagField(Feld);
+		return getWay(Feld, Flag, Me);
+	}
+	public static Stack<Position> getWay(FieldType Feld [][], Position Flag, Position Me) {
+		Stack <Position> Way = new Stack<Position>();
+		if (Me.equals(Flag)) {
+			Way.push(Me);
+			return Way;
+			}
+		if (!Feld[Me.x][Me.y].isWalkable()) return Way;
+		else {
+			Feld[Me.x][Me.y] = FieldType.RESTRICTED_FIELD;
+			int xx = Flag.x - Me.x;
+			int yy = Flag.y - Me.y;
+			if(Math.abs(xx) > Math.abs(yy)) {
+				if (xx<0 && yy<0) {
+					Way = getWay(Feld, Flag, Me.left());
+					if(Way.isEmpty())
+						Way = getWay(Feld, Flag, Me.up());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.down());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.right());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+				}
+				if (xx<0 && yy>=0) {
+					Way = getWay(Feld, Flag, Me.left());
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.down());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.up());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.right());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+				}
+				if (xx>=0 && yy<0) {
+					Way = getWay(Feld, Flag, Me.right());
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.up());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.down());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.left());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+				}
+				if (xx>=0 && yy>=0) {
+					Way = getWay(Feld, Flag, Me.right());
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.down());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.up());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())
+						Way = getWay(Feld, Flag, Me.left());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+				}
+			}
+			else {
+				if (xx<0 && yy<0) {
+					Way = getWay(Feld, Flag, Me.up());
+					if(Way.isEmpty()) Way = getWay(Feld, Flag, Me.left());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.right());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.down());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+				}
+				if (xx<0 && yy>=0) {
+					Way = getWay(Feld, Flag, Me.down());
+					if(Way.isEmpty()) Way = getWay(Feld, Flag, Me.left());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.right());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.up());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+				}
+				if (xx>=0 && yy<0) {
+					Way = getWay(Feld, Flag, Me.up());
+					if(Way.isEmpty()) Way = getWay(Feld, Flag, Me.right());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.left());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.down());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+				}
+				if (xx>=0 && yy>=0) {
+					Way = getWay(Feld, Flag, Me.down());
+					if(Way.isEmpty()) Way = getWay(Feld, Flag, Me.right());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.left());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+					if(Way.isEmpty())Way = getWay(Feld, Flag, Me.up());
+					else {
+						Way.push(Me);
+						return Way;
+					}
+				}
+			}
+		}
+		if(Way.isEmpty()) {
+			Stack<Position> stack = new Stack<Position>();
+			return stack;
+		}
+		else {
+			Way.push(Me);
+			return Way;
+		}
+	}
+}
